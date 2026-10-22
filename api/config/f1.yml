@@ -1,0 +1,17 @@
+# Read-only F1 API. Secrets come from the environment: export F1_DB_PASSWORD before starting.
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+database:
+  url: jdbc:postgresql://localhost:5432/f1platform
+  user: f1
+  password: ${F1_DB_PASSWORD}
+  maximumPoolSize: 10
+
+logging:
+  level: INFO
