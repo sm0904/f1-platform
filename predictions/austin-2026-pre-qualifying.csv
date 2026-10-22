@@ -1,0 +1,23 @@
+model_version,target_season,target_round,target_name,target_date,data_cutoff_date,input_races,grid_known,family_name,given_name,constructor,rating_strength,win_prob,podium_prob,expected_position
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Verstappen,Max,Red Bull,581.2,0.2061,0.5362,3.810
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Norris,Lando,McLaren,508.6,0.1347,0.3939,4.876
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Leclerc,Charles,Ferrari,475.9,0.1121,0.3360,5.427
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Russell,George,Mercedes,463.9,0.1065,0.3141,5.640
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Hamilton,Lewis,Ferrari,439.2,0.0907,0.2816,6.055
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Piastri,Oscar,McLaren,435.0,0.0859,0.2694,6.192
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Antonelli,Andrea Kimi,Mercedes,403.0,0.0713,0.2288,6.785
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Hadjar,Isack,Red Bull,323.0,0.0454,0.1483,8.394
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Lawson,Liam,RB F1 Team,152.9,0.0169,0.0595,12.253
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Hülkenberg,Nico,Audi,139.1,0.0155,0.0541,12.663
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Lindblad,Arvid,RB F1 Team,123.1,0.0153,0.0486,13.029
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Gasly,Pierre,Alpine F1 Team,106.0,0.0143,0.0476,13.357
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Alonso,Fernando,Aston Martin,81.7,0.0119,0.0385,14.031
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Bearman,Oliver,Haas F1 Team,60.8,0.0105,0.0361,14.526
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Sainz,Carlos,Williams,55.5,0.0110,0.0346,14.598
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Bortoleto,Gabriel,Audi,49.6,0.0100,0.0326,14.755
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Ocon,Esteban,Haas F1 Team,38.9,0.0094,0.0315,14.956
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Colapinto,Franco,Alpine F1 Team,35.1,0.0083,0.0298,15.131
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Albon,Alexander,Williams,20.0,0.0078,0.0251,15.457
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Stroll,Lance,Aston Martin,-22.9,0.0065,0.0202,16.426
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Pérez,Sergio,Cadillac F1 Team,-39.0,0.0064,0.0210,16.687
+elo-k32-lambda1.0,2026,18,United States Grand Prix,2026-10-25,2026-10-11,1166,f,Bottas,Valtteri,Cadillac F1 Team,-100.2,0.0040,0.0131,17.953

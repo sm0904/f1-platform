@@ -117,7 +117,7 @@ driver twice in a race would reject real history. The rule is therefore: one ent
 and car number.
 
 **Fields.**
-- **car_number**: the number on the car for this entry. Required, and must be positive.
+- **car_number**: the number on the car for this entry. Positive when present. It is empty when the provider reports no number: withdrawals in 1961 to 1963 have none, and 1973, 1993, and 1994 use a placeholder 0, which the loader stores as empty. Because SQL treats empty values as distinct, the database does not enforce the uniqueness rule for these rows. The loader enforces it instead: the same driver cannot appear twice in one session with no number.
 - **position**: the official classified position. Empty when the driver is not classified.
 - **position_text**: the provider's raw position text, kept as received. For example, `1`, `R` for retired, or `D` for disqualified.
 - **status**: our classification, derived from the position text and the status text (see below).
@@ -132,7 +132,7 @@ and car number.
 
 **Rules.**
 - A `CLASSIFIED` result must have a position. Classified means the official classification ranked the car.
-- Position, grid, laps, and car number must be positive or zero where they are present.
+- Position, grid, and laps must be positive or zero where they are present. Car number must be positive where present.
 - Points cannot be negative.
 
 **Indexes.** Lookups by driver and by constructor are indexed, because the insight and standings queries
@@ -152,4 +152,32 @@ rows still refer to is rejected by the database. Loads only ever insert or updat
 | Version | Adds | Status |
 |---|---|---|
 | V1 | Season, circuit, race, session, driver, constructor, session_result | Applied |
-| V2 | Prediction runs and predictions, with cutoff timestamps | Planned for Austin |
+| V2 | Prediction runs and predictions, with data cutoff dates and immutability by unique key | Written; applies to the Austin run |
+
+---
+
+## prediction_run (V2)
+
+Migration: V2. One row per frozen prediction for one target race.
+
+- **model_name** and **model_version**: which model produced it, and its parameters (for example `elo-pl`, `k32-lambda0.5`).
+- **target_season**, **target_round**, **target_name**, **target_date**: the race being predicted. The race is not
+  in the `race` table, because it has not happened yet.
+- **data_cutoff_date**: the date of the last race whose results the model could see. Must be before the target date.
+- **input_races**: how many completed races fed the model.
+- **grid_known**: false for a pre-qualifying prediction, true once the starting grid is known.
+- **simulations** and **random_seed**: the Monte Carlo settings, so a run can be reproduced exactly.
+- **parameters**: the full set of model settings, as JSON.
+
+A run is unique per target race, model version, and grid status. Once stored, it is not overwritten.
+
+## prediction (V2)
+
+Migration: V2. One row per driver in a run.
+
+- **rating_strength**: the driver's combined driver and constructor strength on the Elo scale.
+- **win_prob** and **podium_prob**: probability of finishing first or in the top three. Each is between 0 and 1,
+  and the podium probability is never less than the win probability.
+- **expected_position**: the average finishing position across the simulations. At least 1.
+
+The probabilities assume the whole field takes the start. The model does not yet estimate retirements, so each driver's chance of finishing is treated as certain.

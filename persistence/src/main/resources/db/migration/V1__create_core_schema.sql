@@ -67,7 +67,8 @@ CREATE TABLE session_result (
     driver_id       BIGINT NOT NULL REFERENCES driver (id),
     constructor_id  BIGINT NOT NULL REFERENCES constructor (id),
     -- Car number identifies the entry. Some drivers drove two cars in one race (1950 to 1964).
-    car_number      INTEGER NOT NULL,
+    -- NULL when the provider reports no number (withdrawals in 1961-1963) or a placeholder 0 (1973, 1993, 1994).
+    car_number      INTEGER,
     position        INTEGER,
     position_text   TEXT NOT NULL,
     status          TEXT NOT NULL,
@@ -88,7 +89,8 @@ CREATE TABLE session_result (
     CONSTRAINT result_grid_non_negative CHECK (grid IS NULL OR grid >= 0),
     CONSTRAINT result_laps_non_negative CHECK (laps IS NULL OR laps >= 0),
     CONSTRAINT result_points_non_negative CHECK (points >= 0),
-    CONSTRAINT result_car_number_positive CHECK (car_number > 0),
+    CONSTRAINT result_car_number_positive CHECK (car_number IS NULL OR car_number > 0),
+    -- NULL car numbers are distinct in SQL, so the loader also rejects a repeated driver with no number.
     CONSTRAINT result_one_entry_per_car UNIQUE (session_id, driver_id, car_number)
 );
 
