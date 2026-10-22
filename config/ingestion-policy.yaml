@@ -1,0 +1,35 @@
+# Rate limiting and backoff policy for external providers.
+# Values are design targets. Provider limits are NOT verified unless marked as such.
+
+jolpica:            # historical results; batch use only
+  request_interval_seconds: 1.0      # one request at a time, paced
+  max_concurrency: 1
+  page_size: 100                     # verified: server caps at 100
+  retry:
+    attempts: 5
+    backoff_base_seconds: 5          # exponential: 5, 10, 20, 40
+    backoff_cap_seconds: 60
+    jitter: full                     # random 0..delay, avoids synchronised retries
+  client_cache_max_age_seconds: 600  # verified: server sends cache-control max-age=600
+  rate_limit_documented: unverified  # no rate-limit headers observed
+
+openf1_rest:        # backfill and catch-up only; live data comes from MQTT
+  token_bucket:
+    rate_per_second: 2.0             # below any plausible limit; unverified
+    burst: 2
+  respect_retry_after: true          # on HTTP 429, wait the Retry-After value
+  retry_after_cap_seconds: 10        # never wait longer than this during a live session
+  retry:
+    attempts: 5
+    backoff_base_seconds: 0.5
+    backoff_cap_seconds: 5
+    jitter: full
+
+openf1_mqtt:        # live timing; push, not polling
+  latency_budget_seconds: 3          # end to end target, measured not assumed
+  reconnect:
+    backoff_base_seconds: 0.25
+    backoff_factor: 2
+    backoff_cap_seconds: 2           # keeps reconnects inside the latency budget
+    jitter: 0.2                      # plus or minus 20 percent
+  max_silence_seconds: 10            # no messages for this long -> state DEGRADED, raise alert

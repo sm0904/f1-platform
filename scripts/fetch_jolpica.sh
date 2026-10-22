@@ -36,7 +36,10 @@ for year in $(seq "$first" "$last"); do
       for attempt in 1 2 3 4 5; do
         if curl -sS -f --max-time 60 -o "$tmp" "$url"; then ok=1; break; fi
         echo "retry $attempt for $url" >&2
-        sleep $((attempt * 5))
+        # exponential backoff: 5, 10, 20, 40 seconds, capped at 60, with full jitter
+        delay=$(( 5 * (1 << (attempt - 1)) ))
+        (( delay > 60 )) && delay=60
+        sleep $(( RANDOM % (delay + 1) ))
       done
       if (( ok == 0 )); then echo "failed: $url" >&2; exit 1; fi
       mv "$tmp" "$file"
