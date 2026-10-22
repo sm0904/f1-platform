@@ -1,0 +1,8 @@
+target/
+build/
+*.iml
+.idea/
+.vscode/
+.env
+data/raw/
+node_modules/
