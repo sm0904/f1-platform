@@ -27,7 +27,7 @@ Health: `GET http://localhost:8081/healthcheck` (reports the database as healthy
 ## Conventions
 
 - **Dates** are ISO strings (`2026-10-25`). Times are ISO 8601 in UTC (`2026-10-22T11:55:18Z`).
-- **Points** are decimal strings with one place (`437.0`), so half points are exact.
+- **Points** are JSON numbers with one decimal place (`437.0`). Half points (`0.5`) are exact at this scale.
 - **Errors** follow RFC 9457 problem details, with `Content-Type: application/problem+json`:
   unknown season or race returns 404, an unknown session returns 400.
 - **Caching:** historical endpoints send `Cache-Control: public, max-age=3600`, because past results do not change.
