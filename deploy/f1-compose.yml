@@ -1,0 +1,17 @@
+# Container configuration. The database host is the compose service name, and the password comes from the environment.
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+database:
+  url: jdbc:postgresql://db:5432/f1platform
+  user: f1
+  password: ${F1_DB_PASSWORD}
+  maximumPoolSize: 10
+
+logging:
+  level: INFO

@@ -41,7 +41,7 @@ and the result is applied afterwards. Nothing from a later race is used.
 
 | λ | Winner log loss (lower is better) | Brier | Spearman |
 |---|---|---|---|
-| 0.00 | 2.366 | 0.043 | 0.706 |
+| 0.00 | 2.366 | 0.043 | 0.694 |
 | 0.25 | 2.234 | 0.042 | 0.732 |
 | 0.50 | 2.079 | 0.041 | 0.732 |
 | 0.75 | 1.877 | 0.038 | 0.731 |
@@ -49,7 +49,7 @@ and the result is applied afterwards. Nothing from a later race is used.
 
 The baseline scored 2.902 log loss on the same window.
 
-**Chosen λ = 1.00, the data's choice.** This is full carry-over, not the shrink that was planned. The tuning
+**Chosen λ = 1.00 (decided by the owner, 22 October 2026, from the backtest).** This is full carry-over, not the shrink that was planned. The tuning
 window includes the 2022 technical regulation change, and carry-over still scored best there. That is evidence
 for carry-over across a regulation change, but it is one change, so it is weak. 2026 is also a regulation change,
 so this is the main assumption to watch. λ = 0.75 is a sensible sensitivity check, and the Austin run was
@@ -59,14 +59,15 @@ Out-of-sample results, using λ = 1.00:
 
 | Window | Races | Model log loss | Baseline log loss | Model Brier | Baseline Brier | Model Spearman | Baseline Spearman |
 |---|---|---|---|---|---|---|---|
-| 2024–2025 | 48 | 2.016 | 2.929 | 0.041 | 0.047 | 0.666 | 0.667 |
-| 2026 to date | 17 | 2.536 | 3.043 | 0.042 | 0.043 | 0.666 | 0.728 |
+| 2024–2025 | 48 | 2.016 | 2.929 | 0.041 | 0.047 | 0.666 | 0.662 |
+| 2026 to date | 17 | 2.536 | 3.043 | 0.042 | 0.043 | 0.666 | 0.700 |
 
 **Reading the results.**
 
 - The model beats the points baseline on log loss and Brier score in both windows. The gap is large on log loss.
-- On rank correlation the model ties the baseline for 2024–2025 and falls behind it for 2026 so far.
-  The baseline's rank advantage in 2026 is the kind of result to watch as the season goes on.
+- On rank correlation the model is level with the baseline for 2024–2025 (0.666 against 0.662), and behind it for
+  2026 so far (0.666 against 0.700). The baseline's rank advantage in 2026 is the kind of result to watch as the
+  season goes on.
 - Calibration is reasonable at low probabilities. The mid-range bins have few races, so their observed rates are
   noisy. In 2026 the 0.1–0.2 bin was too high (predicted 0.128, observed 0.074), which is a sign that the
   model may be overconfident this season.
@@ -83,12 +84,17 @@ Out-of-sample results, using λ = 1.00:
 | Stored | 22 rows in `prediction`, plus the run in `prediction_run` |
 | Export | `predictions/austin-2026-pre-qualifying.csv` |
 
-Top of the order: Verstappen (win 20.6%, podium 53.6%, expected position 3.8), Norris (13.5%, 39.4%, 4.9),
-Leclerc (11.2%, 33.6%, 5.4), Russell (10.7%, 31.4%, 5.6).
+Top of the order: Verstappen (win 20.5%, podium 53.7%, expected position 3.8), Norris (13.5%, 39.2%, 4.9),
+Leclerc (11.2%, 33.0%, 5.5), Russell (10.4%, 31.9%, 5.6).
 
-**Sensitivity to λ.** With λ = 0.75, the same model gives Verstappen 13.9% to win, with a flatter field
-(the top five are all between 9% and 14%). The order of the top four is unchanged. The choice of λ mainly
+**Sensitivity to λ.** With λ = 0.75, the same model gives Verstappen 13.5% to win, with a flatter field
+(the top six are all between 9% and 13.5%). The order of the top four is unchanged. The choice of λ mainly
 changes how confident the model is, not who it expects to finish near the front.
+
+**Reproducibility.** The run is deterministic. The win probability is the exact Plackett–Luce value. The podium
+probability and expected position come from 20,000 simulated races with seed 2026. The cars are listed in order of
+their provider keys, compared as bytes, so the result does not depend on how the database returns rows. The local
+database and the container database produce identical rows for all 22 drivers.
 
 **Caveats.** The field assumes all 22 cars start. Drivers who change teams, or who miss the race, are not
 modelled. The 2026 regulation change may have moved the true pecking order by more than ratings can capture.

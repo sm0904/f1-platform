@@ -1,0 +1,62 @@
+# Runs the whole stack locally. See docs/RUN.md for the steps.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: f1
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: f1platform
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U f1 -d f1platform"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  # One-time step: load the fetched data and store the Austin prediction. Run with --profile load.
+  load:
+    profiles: ["load"]
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      F1_DB_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - ./data/raw:/data/raw:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - sh
+      - -c
+      - >-
+        java -cp "$$CP" io.f1platform.ingestion.LoadMain /data/raw/jolpica
+        jdbc:postgresql://db:5432/f1platform f1 "$$F1_DB_PASSWORD" &&
+        java -cp "$$CP" io.f1platform.prediction.PredictionRunner
+        jdbc:postgresql://db:5432/f1platform f1 "$$F1_DB_PASSWORD" 1.0
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      F1_DB_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:

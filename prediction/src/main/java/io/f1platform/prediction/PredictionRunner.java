@@ -109,7 +109,7 @@ public final class PredictionRunner {
                     ps.setLong(2, e.driverId());
                     ps.setLong(3, e.constructorId());
                     ps.setDouble(4, strengths[i]);
-                    ps.setDouble(5, sim[0][i]);
+                    ps.setDouble(5, exactWin[i]);  // exact closed form, not the simulated estimate
                     ps.setDouble(6, Math.max(sim[1][i], sim[0][i]));
                     ps.setDouble(7, Math.max(1.0, sim[2][i]));
                     ps.addBatch();
@@ -122,20 +122,20 @@ public final class PredictionRunner {
         }
 
         System.out.printf("%nAustin %d prediction (pre-qualifying, cutoff %s):%n", TARGET_SEASON, last.date());
-        System.out.println("driver_id  strength   win(sim)  win(exact)  podium   expected_pos");
+        System.out.println("driver_id  strength   win(exact)  win(sim)  podium   expected_pos");
         Integer[] order = new Integer[field.size()];
         for (int i = 0; i < order.length; i++) {
             order[i] = i;
         }
         java.util.Arrays.sort(order, (a, b) -> Double.compare(sim[2][a], sim[2][b]));
         for (int idx : order) {
-            System.out.printf("%-10d %8.1f   %.3f     %.3f      %.3f    %.2f%n",
-                    field.get(idx).driverId(), strengths[idx], sim[0][idx], exactWin[idx], sim[1][idx], sim[2][idx]);
+            System.out.printf("%-10d %8.1f   %.4f      %.3f     %.3f    %.2f%n",
+                    field.get(idx).driverId(), strengths[idx], exactWin[idx], sim[0][idx], sim[1][idx], sim[2][idx]);
         }
         double winSum = 0;
         double podiumSum = 0;
         for (int i = 0; i < field.size(); i++) {
-            winSum += sim[0][i];
+            winSum += exactWin[i];
             podiumSum += sim[1][i];
         }
         System.out.printf("checks: win probabilities sum to %.3f (expect 1), podium to %.3f (expect 3)%n", winSum, podiumSum);

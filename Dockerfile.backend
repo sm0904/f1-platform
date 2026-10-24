@@ -1,0 +1,21 @@
+# Builds every Java module once. The same image runs the API, the loader, and the prediction runner.
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /src
+# Trust any extra CA certificates from certs/ (corporate proxies), then fetch dependencies.
+COPY certs/ /certs/
+RUN for f in /certs/*.crt; do [ -f "$f" ] && keytool -importcert -noprompt -cacerts -storepass changeit -alias "$(basename "$f" .crt)" -file "$f"; done; true
+COPY . .
+RUN mvn -q -B -DskipTests package dependency:copy-dependencies \
+        -DoutputDirectory=/out/lib -DincludeScope=runtime
+
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=build /src/persistence/target/classes /app/classes/persistence
+COPY --from=build /src/ingestion/target/classes /app/classes/ingestion
+COPY --from=build /src/prediction/target/classes /app/classes/prediction
+COPY --from=build /src/api/target/classes /app/classes/api
+COPY --from=build /out/lib /app/lib
+COPY deploy/f1-compose.yml /app/deploy/f1-compose.yml
+ENV CP=/app/classes/persistence:/app/classes/ingestion:/app/classes/prediction:/app/classes/api:/app/lib/*
+EXPOSE 8080 8081
+CMD ["sh", "-c", "java -cp \"$CP\" io.f1platform.api.F1Application server /app/deploy/f1-compose.yml"]

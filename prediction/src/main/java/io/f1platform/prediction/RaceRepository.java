@@ -25,8 +25,12 @@ public final class RaceRepository {
                 FROM session_result sr
                 JOIN session s ON s.id = sr.session_id
                 JOIN race r ON r.id = s.race_id
+                JOIN driver d ON d.id = sr.driver_id
                 WHERE s.type IN ('RACE', 'SPRINT')
-                ORDER BY r.season_year, r.round, s.type""";
+                -- Field order must not depend on how the database returns rows: the simulation draws
+                -- cars in list order, so the order is fixed by provider keys compared in byte order (COLLATE "C"),
+                -- because text collation can differ between databases and machines.
+                ORDER BY r.season_year, r.round, s.type, d.source_key COLLATE "C", sr.car_number NULLS FIRST""";
         try (Connection c = DriverManager.getConnection(url, user, password);
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
