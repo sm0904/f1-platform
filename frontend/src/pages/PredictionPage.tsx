@@ -62,8 +62,8 @@ export function PredictionPage() {
                 <YAxis unit="%" />
                 <Tooltip formatter={(v) => `${Number(v).toFixed(1)}%`} />
                 <Legend />
-                <Bar dataKey="win" name="Win" fill="#e10600" />
-                <Bar dataKey="podium" name="Podium" fill="#1e41ff" />
+                <Bar dataKey="win" name="Win" fill="#e10600" isAnimationActive={false} />
+                <Bar dataKey="podium" name="Podium" fill="#1e41ff" isAnimationActive={false} />
               </BarChart>
             </ResponsiveContainer>
           </div>
