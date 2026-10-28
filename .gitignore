@@ -11,3 +11,4 @@ dist/
 certs/*
 !certs/README.md
 !certs/.gitkeep
+e2e-*.png

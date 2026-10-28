@@ -1,0 +1,220 @@
+[
+ {
+  "id": 1,
+  "modelName": "elo-plackett-luce",
+  "modelVersion": "elo-k32-lambda1.0",
+  "targetSeason": 2026,
+  "targetRound": 18,
+  "targetName": "United States Grand Prix",
+  "targetDate": "2026-10-25",
+  "dataCutoffDate": "2026-10-11",
+  "inputRaces": 1166,
+  "gridKnown": false,
+  "simulations": 20000,
+  "randomSeed": 2026,
+  "createdAt": "2026-10-22T19:25:14Z",
+  "parameters": {
+   "lambda": 1.0
+  },
+  "predictions": [
+   {
+    "givenName": "Max",
+    "familyName": "Verstappen",
+    "constructor": "Red Bull",
+    "ratingStrength": 581.2,
+    "winProb": 0.205,
+    "podiumProb": 0.5374,
+    "expectedPosition": 3.806
+   },
+   {
+    "givenName": "Lando",
+    "familyName": "Norris",
+    "constructor": "McLaren",
+    "ratingStrength": 508.7,
+    "winProb": 0.135,
+    "podiumProb": 0.3924,
+    "expectedPosition": 4.873
+   },
+   {
+    "givenName": "Charles",
+    "familyName": "Leclerc",
+    "constructor": "Ferrari",
+    "ratingStrength": 475.9,
+    "winProb": 0.1118,
+    "podiumProb": 0.3297,
+    "expectedPosition": 5.453
+   },
+   {
+    "givenName": "George",
+    "familyName": "Russell",
+    "constructor": "Mercedes",
+    "ratingStrength": 464.0,
+    "winProb": 0.1044,
+    "podiumProb": 0.3186,
+    "expectedPosition": 5.608
+   },
+   {
+    "givenName": "Lewis",
+    "familyName": "Hamilton",
+    "constructor": "Ferrari",
+    "ratingStrength": 439.2,
+    "winProb": 0.0905,
+    "podiumProb": 0.2824,
+    "expectedPosition": 6.06
+   },
+   {
+    "givenName": "Oscar",
+    "familyName": "Piastri",
+    "constructor": "McLaren",
+    "ratingStrength": 435.0,
+    "winProb": 0.0884,
+    "podiumProb": 0.2678,
+    "expectedPosition": 6.189
+   },
+   {
+    "givenName": "Andrea Kimi",
+    "familyName": "Antonelli",
+    "constructor": "Mercedes",
+    "ratingStrength": 403.0,
+    "winProb": 0.0735,
+    "podiumProb": 0.2291,
+    "expectedPosition": 6.774
+   },
+   {
+    "givenName": "Isack",
+    "familyName": "Hadjar",
+    "constructor": "Red Bull",
+    "ratingStrength": 323.1,
+    "winProb": 0.0464,
+    "podiumProb": 0.1534,
+    "expectedPosition": 8.38
+   },
+   {
+    "givenName": "Liam",
+    "familyName": "Lawson",
+    "constructor": "RB F1 Team",
+    "ratingStrength": 152.9,
+    "winProb": 0.0174,
+    "podiumProb": 0.0589,
+    "expectedPosition": 12.292
+   },
+   {
+    "givenName": "Nico",
+    "familyName": "H\u00fclkenberg",
+    "constructor": "Audi",
+    "ratingStrength": 139.1,
+    "winProb": 0.0161,
+    "podiumProb": 0.053,
+    "expectedPosition": 12.645
+   },
+   {
+    "givenName": "Arvid",
+    "familyName": "Lindblad",
+    "constructor": "RB F1 Team",
+    "ratingStrength": 123.1,
+    "winProb": 0.0147,
+    "podiumProb": 0.0488,
+    "expectedPosition": 12.98
+   },
+   {
+    "givenName": "Pierre",
+    "familyName": "Gasly",
+    "constructor": "Alpine F1 Team",
+    "ratingStrength": 106.0,
+    "winProb": 0.0133,
+    "podiumProb": 0.045,
+    "expectedPosition": 13.359
+   },
+   {
+    "givenName": "Fernando",
+    "familyName": "Alonso",
+    "constructor": "Aston Martin",
+    "ratingStrength": 81.8,
+    "winProb": 0.0116,
+    "podiumProb": 0.0386,
+    "expectedPosition": 14.0
+   },
+   {
+    "givenName": "Oliver",
+    "familyName": "Bearman",
+    "constructor": "Haas F1 Team",
+    "ratingStrength": 60.8,
+    "winProb": 0.0103,
+    "podiumProb": 0.0354,
+    "expectedPosition": 14.553
+   },
+   {
+    "givenName": "Carlos",
+    "familyName": "Sainz",
+    "constructor": "Williams",
+    "ratingStrength": 55.6,
+    "winProb": 0.0099,
+    "podiumProb": 0.0335,
+    "expectedPosition": 14.671
+   },
+   {
+    "givenName": "Gabriel",
+    "familyName": "Bortoleto",
+    "constructor": "Audi",
+    "ratingStrength": 49.7,
+    "winProb": 0.0096,
+    "podiumProb": 0.0324,
+    "expectedPosition": 14.755
+   },
+   {
+    "givenName": "Esteban",
+    "familyName": "Ocon",
+    "constructor": "Haas F1 Team",
+    "ratingStrength": 38.9,
+    "winProb": 0.009,
+    "podiumProb": 0.031,
+    "expectedPosition": 15.046
+   },
+   {
+    "givenName": "Franco",
+    "familyName": "Colapinto",
+    "constructor": "Alpine F1 Team",
+    "ratingStrength": 35.1,
+    "winProb": 0.0088,
+    "podiumProb": 0.0292,
+    "expectedPosition": 15.114
+   },
+   {
+    "givenName": "Alexander",
+    "familyName": "Albon",
+    "constructor": "Williams",
+    "ratingStrength": 20.0,
+    "winProb": 0.0081,
+    "podiumProb": 0.0281,
+    "expectedPosition": 15.442
+   },
+   {
+    "givenName": "Lance",
+    "familyName": "Stroll",
+    "constructor": "Aston Martin",
+    "ratingStrength": -22.9,
+    "winProb": 0.0063,
+    "podiumProb": 0.022,
+    "expectedPosition": 16.352
+   },
+   {
+    "givenName": "Sergio",
+    "familyName": "P\u00e9rez",
+    "constructor": "Cadillac F1 Team",
+    "ratingStrength": -39.0,
+    "winProb": 0.0058,
+    "podiumProb": 0.0199,
+    "expectedPosition": 16.7
+   },
+   {
+    "givenName": "Valtteri",
+    "familyName": "Bottas",
+    "constructor": "Cadillac F1 Team",
+    "ratingStrength": -100.2,
+    "winProb": 0.0041,
+    "podiumProb": 0.0137,
+    "expectedPosition": 17.947
+   }
+  ]
+ }
+]

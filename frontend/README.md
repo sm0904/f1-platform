@@ -25,3 +25,12 @@ npm run build      # production build into dist/
 - **Standings:** driver and constructor championship for a season, with a points chart and table.
 - **Race results:** every race in a season, with the race, sprint, or qualifying results.
 - **Prediction:** the stored Austin 2026 pre-qualifying run, with its cutoff, model version, and caveats.
+
+## Browser test
+
+```
+npx playwright install chromium   # first time only
+npm run e2e
+```
+
+See `../docs/TESTING.md` for what it checks.
