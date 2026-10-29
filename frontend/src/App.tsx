@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { api, type SeasonSummary } from "./api";
 import { Status } from "./components/Status";
-import { PredictionPage } from "./pages/PredictionPage";
-import { RacesPage } from "./pages/RacesPage";
-import { StandingsPage } from "./pages/StandingsPage";
+const PredictionPage = lazy(() => import("./pages/PredictionPage").then((m) => ({ default: m.PredictionPage })));
+const RacesPage = lazy(() => import("./pages/RacesPage").then((m) => ({ default: m.RacesPage })));
+const StandingsPage = lazy(() => import("./pages/StandingsPage").then((m) => ({ default: m.StandingsPage })));
 import { useAsync } from "./useAsync";
 
 type Tab = "standings" | "races" | "prediction";
@@ -38,13 +38,15 @@ export function App() {
       </header>
 
       <main>
-        {tab === "prediction" ? (
-          <PredictionPage />
-        ) : seasons.data ? (
-          tab === "standings" ? <StandingsPage seasons={seasons.data} /> : <RacesPage seasons={seasons.data} />
-        ) : (
-          <Status loading={seasons.loading} error={seasons.error} />
-        )}
+        <Suspense fallback={<p className="muted">Loading...</p>}>
+          {tab === "prediction" ? (
+            <PredictionPage />
+          ) : seasons.data ? (
+            tab === "standings" ? <StandingsPage seasons={seasons.data} /> : <RacesPage seasons={seasons.data} />
+          ) : (
+            <Status loading={seasons.loading} error={seasons.error} />
+          )}
+        </Suspense>
       </main>
     </div>
   );

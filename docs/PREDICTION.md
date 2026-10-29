@@ -1,6 +1,7 @@
 # Prediction method and results
 
-Status: Austin 2026 pre-qualifying prediction stored (run id 1). Post-qualifying run planned for Saturday 24 October.
+Status: the Austin 2026 pre-qualifying prediction (exported 22 October 2026) has been verified against the result.
+See `reports/austin-2026.md`. A post-qualifying run is not produced, because the model does not use the grid.
 
 ## What is predicted
 
@@ -100,16 +101,16 @@ database and the container database produce identical rows for all 22 drivers.
 modelled. The 2026 regulation change may have moved the true pecking order by more than ratings can capture.
 Nothing in the model knows about upgrades, weather, or tyre strategy.
 
-## Freeze procedure
+## Freeze and verification
 
-- The run is stored with its cutoff and seed. The unique key (model version, target, grid status) stops any
-  second run from overwriting it. A changed model needs a new version, so the stored run is never changed.
-- On Friday 23 October, before first practice: tag the commit that produced the run, then re-export the CSV.
-- On Saturday 24 October, after qualifying: store a second run with `grid_known = true`, using the grid as
-  the field order. It is stored separately, and both runs are kept for the verification report.
+- Each run is stored with its cutoff and seed. A unique key (model version, target, grid status) stops a second run
+  from overwriting it.
+- The cutoff is enforced in the query: only races dated before the target race are read. A run cannot see later results.
+- The Austin run was exported to `predictions/austin-2026-pre-qualifying.csv` on 22 October, before the race. The
+  database was rebuilt on 29 October. The rebuilt run matches that export row for row.
 
-## Verification (after the race, 25 October)
+## Verification
 
-Score the stored runs against the official result: log loss and Brier score for the winner, podium accuracy,
-and Spearman correlation for the finishing order. Compare against the baseline on the same race. Record the
-misses in `docs/reports/austin-2026.md`.
+Each race is scored against the official result with the same measures as the backtest: winner log loss and Brier
+score over the full field, Spearman correlation over classified finishers, and the points baseline for comparison.
+The Austin 2026 report is in `docs/reports/austin-2026.md`.

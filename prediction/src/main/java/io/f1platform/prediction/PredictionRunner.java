@@ -37,7 +37,8 @@ public final class PredictionRunner {
         boolean dryRun = args.length > 5 && args[5].equals("dry-run");
         Migrations.migrate(url, user, password);
 
-        List<RaceRecord> races = RaceRepository.loadRaces(url, user, password);
+        // Only races before the target date can inform the prediction: the cutoff is enforced in the query.
+        List<RaceRecord> races = RaceRepository.loadRacesBefore(url, user, password, TARGET_DATE);
         RaceRecord last = races.get(races.size() - 1);
         if (last.season() != TARGET_SEASON || last.round() != TARGET_ROUND - 1) {
             throw new IllegalStateException("expected the last completed race to be 2026 round 17, found "

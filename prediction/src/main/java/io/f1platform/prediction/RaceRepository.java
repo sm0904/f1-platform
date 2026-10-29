@@ -18,6 +18,16 @@ public final class RaceRepository {
     private RaceRepository() {}
 
     public static List<RaceRecord> loadRaces(String url, String user, String password) throws SQLException {
+        return loadRacesBefore(url, user, password, null);
+    }
+
+    /**
+     * Completed races strictly before cutoffDate (exclusive). Passing the target race's date enforces the
+     * prediction cutoff in the query itself, so later results can never leak into a prediction.
+     * A null cutoff loads everything.
+     */
+    public static List<RaceRecord> loadRacesBefore(String url, String user, String password, LocalDate cutoffDate)
+            throws SQLException {
         Map<String, Acc> byRace = new LinkedHashMap<>();
         String sql = """
                 SELECT r.season_year, r.round, r.name, r.race_date, s.type,
@@ -27,13 +37,16 @@ public final class RaceRepository {
                 JOIN race r ON r.id = s.race_id
                 JOIN driver d ON d.id = sr.driver_id
                 WHERE s.type IN ('RACE', 'SPRINT')
+                  AND (CAST(? AS DATE) IS NULL OR r.race_date < CAST(? AS DATE))
                 -- Field order must not depend on how the database returns rows: the simulation draws
                 -- cars in list order, so the order is fixed by provider keys compared in byte order (COLLATE "C"),
                 -- because text collation can differ between databases and machines.
                 ORDER BY r.season_year, r.round, s.type, d.source_key COLLATE "C", sr.car_number NULLS FIRST""";
         try (Connection c = DriverManager.getConnection(url, user, password);
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setObject(1, cutoffDate);
+            ps.setObject(2, cutoffDate);
+            try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int season = rs.getInt(1);
                 int round = rs.getInt(2);
@@ -51,6 +64,7 @@ public final class RaceRepository {
                 } else {
                     acc.sprintPoints.merge(driverId, points, Double::sum);
                 }
+            }
             }
         }
         List<RaceRecord> races = new ArrayList<>();
