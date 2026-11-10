@@ -6,6 +6,8 @@ import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import io.f1platform.api.resources.ConstructorResource;
+import io.f1platform.api.resources.DriverResource;
 import io.f1platform.api.resources.PredictionResource;
 import io.f1platform.api.resources.RaceResource;
 import io.f1platform.api.resources.SeasonResource;
@@ -36,6 +38,8 @@ public final class F1Application extends Application<F1Configuration> {
         environment.jersey().register(new SeasonResource(queries));
         environment.jersey().register(new RaceResource(queries));
         environment.jersey().register(new PredictionResource(queries));
+        environment.jersey().register(new DriverResource(queries));
+        environment.jersey().register(new ConstructorResource(queries));
         environment.jersey().register(new ApiExceptionMapper());
 
         environment.healthChecks().register("database", new HealthCheck() {

@@ -5,6 +5,22 @@ Everything runs in containers.
 
 When it is running, open **http://localhost:3000**. The dashboard calls the API under `/api`.
 
+## Quickest: start from the database dump
+
+If you do not want to fetch and load the data yourself, use the dump `f1platform.dump` (about 750 KB). It holds
+all race, qualifying, and sprint results from 1950 to 2026, the Austin and Mexico City predictions, and the schema.
+Run these from the project folder, after step 1 below:
+
+```
+docker compose up -d db
+docker compose cp f1platform.dump db:/tmp/f1.dump
+docker compose exec -T db pg_restore -U f1 -d f1platform --no-owner /tmp/f1.dump
+docker compose up -d api web
+```
+
+Then open **http://localhost:3000**. The dump is not in git, because it is a binary file that goes stale when the data
+changes. Put it in the project folder before the `cp` command.
+
 ## Steps
 
 1. **Set a database password.** From the project folder:

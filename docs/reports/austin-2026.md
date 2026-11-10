@@ -92,3 +92,20 @@ The baseline is the same Plackett–Luce conversion applied to championship poin
 1. Model retirements as a separate, constructor-level probability, then re-run the backtest.
 2. Decide whether sprint results should update the ratings, and test that in the backtest.
 3. Use the grid in the model, and test it on the historical races that have grids.
+
+---
+
+## Mexico City 2026 (round 19, 1 November 2026)
+
+Verified 10 November 2026. Prediction made from Austin results (cutoff 25 October).
+
+- **Winner:** Verstappen (Red Bull). **Model ranked him first** with 20.5% to win.
+- Log loss: 1.583 (better than Austin's 2.610).
+- Brier: 0.033 (better than Austin's 0.044).
+- Spearman: 0.737 (worse than Austin's 0.895).
+- Predicted top 3: Verstappen, Norris, Leclerc. Actual: Verstappen, Hamilton, Antonelli.
+- Hirakawa replaced Ocon for this race and was not in the prediction.
+
+## Brazil 2026 (round 20, 8 November 2026)
+
+No stored pre-race prediction. The result is loaded: Norris won.

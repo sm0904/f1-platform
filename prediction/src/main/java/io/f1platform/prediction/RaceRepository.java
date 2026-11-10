@@ -31,7 +31,7 @@ public final class RaceRepository {
         Map<String, Acc> byRace = new LinkedHashMap<>();
         String sql = """
                 SELECT r.season_year, r.round, r.name, r.race_date, s.type,
-                       sr.driver_id, sr.constructor_id, sr.position, sr.points
+                       sr.driver_id, sr.constructor_id, sr.position, sr.points, sr.status, sr.status_detail
                 FROM session_result sr
                 JOIN session s ON s.id = sr.session_id
                 JOIN race r ON r.id = s.race_id
@@ -60,7 +60,8 @@ public final class RaceRepository {
                 Integer position = rs.getObject(8) == null ? null : rs.getInt(8);
                 double points = rs.getDouble(9);
                 if (type.equals("RACE")) {
-                    acc.entries.add(new Entry(driverId, constructorId, position, points));
+                    acc.entries.add(new Entry(driverId, constructorId, position, points,
+                            rs.getString(10), rs.getString(11)));
                 } else {
                     acc.sprintPoints.merge(driverId, points, Double::sum);
                 }

@@ -41,3 +41,7 @@ th { color: var(--muted); font-weight: 600; }
 .error { color: var(--error); }
 .callout { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent); padding: 0.9rem 1rem; border-radius: 6px; }
 .callout p { margin: 0.4rem 0; }
+.chart-wide { overflow-x: auto; }
+.inline-form { display: flex; gap: 0.5rem; align-items: center; }
+.code-input { font: inherit; padding: 0.35rem 0.5rem; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); width: 6rem; text-transform: uppercase; }
+.table-scroll { overflow-x: auto; }

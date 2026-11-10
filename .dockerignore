@@ -1,0 +1,9 @@
+# Keep the build context small: dependency folders, build output, raw data, and secrets are never sent to Docker.
+.git
+**/target
+**/node_modules
+frontend/dist
+data
+.env
+*.dump
+e2e-*.png

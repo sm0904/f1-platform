@@ -3,7 +3,19 @@
 Every check can be run on your own machine. Nothing needs the live database, except the Java integration tests,
 which start their own PostgreSQL container.
 
-## One command
+## Docker only (recommended)
+
+Needs only Docker running. No JDK, Maven, Node, or browser is needed on your machine.
+
+```
+bash scripts/test-in-docker.sh
+```
+
+The Java tests run in a Maven container, and Testcontainers starts PostgreSQL on your Docker daemon. The dashboard
+checks and browser test run in the official Playwright image, which includes Chromium. The first run downloads about
+2 GB of images. Files the containers write (`target/`, `node_modules/`) are owned by root on your machine.
+
+## On your own tools
 
 ```
 bash scripts/test-all.sh

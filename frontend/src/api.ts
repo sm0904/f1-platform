@@ -68,3 +68,32 @@ export const api = {
   predictions: (year: number, round: number) =>
     getJson<PredictionRun[]>(`/api/v1/predictions/${year}/${round}`),
 };
+
+export interface PointsProgression {
+  driverCode: string | null; givenName: string; familyName: string; constructor: string;
+  rounds: { round: number; raceName: string; cumulative: number }[];
+}
+export interface DriverProfile {
+  id: number; code: string | null; givenName: string; familyName: string;
+  nationality: string | null; permanentNumber: number | null;
+}
+export interface DriverResultRow {
+  season: number; round: number; raceName: string; circuit: string; sessionType: string;
+  position: number | null; positionText: string; status: string; grid: number | null;
+  points: number; constructor: string;
+}
+export interface ConstructorProfile { id: number; name: string; nationality: string | null }
+export interface ConstructorSeasonRow { season: number; points: number; wins: number; podiums: number; bestDriver: string | null }
+export interface GridFinishRow { driverCode: string | null; familyName: string; constructor: string; grid: number; finish: number; gained: number }
+
+// Add to the api object
+Object.assign(api, {
+  pointsProgression: (year: number) => getJson<PointsProgression[]>(`/api/v1/seasons/${year}/progression`),
+  driverProfile: (code: string) => getJson<DriverProfile>(`/api/v1/drivers/${code}`),
+  driverResults: (code: string, season?: number) =>
+    getJson<{ driver: DriverProfile; results: DriverResultRow[] }>(`/api/v1/drivers/${code}/results${season ? `?season=${season}` : ""}`),
+  constructorProfile: (name: string) => getJson<ConstructorProfile>(`/api/v1/constructors/${name}`),
+  constructorSeasons: (name: string) =>
+    getJson<{ constructor: ConstructorProfile; seasons: ConstructorSeasonRow[] }>(`/api/v1/constructors/${name}/seasons`),
+  gridVsFinish: (year: number, round: number) => getJson<GridFinishRow[]>(`/api/v1/seasons/${year}/races/${round}/grid`),
+});

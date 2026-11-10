@@ -1,0 +1,23 @@
+model_version,target_season,target_round,target_name,target_date,data_cutoff_date,input_races,grid_known,family_name,given_name,constructor,rating_strength,win_prob,podium_prob,expected_position
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Verstappen,Max,Red Bull,583.7,0.2053,0.5388,3.799
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Norris,Lando,McLaren,507.6,0.1325,0.3871,4.933
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Leclerc,Charles,Ferrari,483.9,0.1156,0.3400,5.340
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Russell,George,Mercedes,460.7,0.1012,0.3093,5.699
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Hamilton,Lewis,Ferrari,444.8,0.0923,0.2867,5.992
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Piastri,Oscar,McLaren,432.5,0.0860,0.2623,6.262
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Antonelli,Andrea Kimi,Mercedes,414.0,0.0773,0.2406,6.580
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Hadjar,Isack,Red Bull,327.8,0.0471,0.1555,8.295
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Lawson,Liam,RB F1 Team,158.3,0.0177,0.0607,12.144
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Hülkenberg,Nico,Audi,140.9,0.0160,0.0527,12.565
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Lindblad,Arvid,RB F1 Team,124.2,0.0146,0.0481,12.960
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Gasly,Pierre,Alpine F1 Team,112.3,0.0136,0.0449,13.219
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Alonso,Fernando,Aston Martin,74.7,0.0110,0.0360,14.148
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Bearman,Oliver,Haas F1 Team,60.5,0.0101,0.0352,14.524
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Bortoleto,Gabriel,Audi,51.0,0.0096,0.0322,14.752
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Sainz,Carlos,Williams,43.9,0.0092,0.0311,14.922
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Ocon,Esteban,Haas F1 Team,38.0,0.0089,0.0287,15.044
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Colapinto,Franco,Alpine F1 Team,37.2,0.0088,0.0303,15.064
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Albon,Alexander,Williams,11.3,0.0076,0.0268,15.603
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Stroll,Lance,Aston Martin,-24.8,0.0062,0.0213,16.369
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Pérez,Sergio,Cadillac F1 Team,-49.5,0.0054,0.0187,16.860
+elo-k32-lambda1.0,2026,19,Mexico City Grand Prix,2026-11-01,2026-10-25,1167,f,Bottas,Valtteri,Cadillac F1 Team,-103.7,0.0039,0.0135,17.927

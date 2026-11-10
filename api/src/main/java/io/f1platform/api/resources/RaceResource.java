@@ -1,6 +1,7 @@
 package io.f1platform.api.resources;
 
 import io.f1platform.api.ApiException;
+import io.f1platform.api.Dtos.GridFinish;
 import io.f1platform.api.Dtos.ResultRow;
 import io.f1platform.api.Queries;
 import jakarta.ws.rs.DefaultValue;
@@ -25,6 +26,16 @@ public class RaceResource {
 
     public RaceResource(Queries queries) {
         this.queries = queries;
+    }
+
+    @GET
+    @Path("grid")
+    public Response gridVsFinish(@PathParam("year") int year, @PathParam("round") int round) throws SQLException {
+        if (!queries.raceExists(year, round)) {
+            throw ApiException.notFound("no race in round " + round + " of " + year);
+        }
+        List<GridFinish> data = queries.gridVsFinish(year, round);
+        return Response.ok(data).header("Cache-Control", SeasonResource.HISTORICAL_CACHE).build();
     }
 
     @GET

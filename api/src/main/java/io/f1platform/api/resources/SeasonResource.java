@@ -13,6 +13,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import io.f1platform.api.Dtos.PointsProgression;
 import java.util.List;
 
 @Path("/api/v1/seasons")
@@ -56,6 +57,14 @@ public class SeasonResource {
         requireSeason(year);
         List<ConstructorStanding> standings = queries.constructorStandings(year);
         return Response.ok(standings).header("Cache-Control", HISTORICAL_CACHE).build();
+    }
+
+    @GET
+    @Path("{year}/progression")
+    public Response pointsProgression(@PathParam("year") int year) throws SQLException {
+        requireSeason(year);
+        List<PointsProgression> data = queries.pointsProgression(year);
+        return Response.ok(data).header("Cache-Control", HISTORICAL_CACHE).build();
     }
 
     private void requireSeason(int year) throws SQLException {

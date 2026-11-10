@@ -1,0 +1,23 @@
+model_version,target_season,target_round,target_name,target_date,data_cutoff_date,input_races,grid_known,family_name,given_name,constructor,rating_strength,win_prob,podium_prob,expected_position
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Verstappen,Max,Red Bull,595.0,0.2160,0.5590,3.664
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Norris,Lando,McLaren,511.3,0.1334,0.3906,4.867
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Leclerc,Charles,Ferrari,480.6,0.1118,0.3319,5.408
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Russell,George,Mercedes,464.4,0.1018,0.3127,5.629
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Hamilton,Lewis,Ferrari,446.0,0.0916,0.2864,5.970
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Antonelli,Andrea Kimi,Mercedes,424.7,0.0810,0.2520,6.381
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Piastri,Oscar,McLaren,416.6,0.0774,0.2381,6.588
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Hadjar,Isack,Red Bull,336.7,0.0488,0.1605,8.086
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Lawson,Liam,RB F1 Team,178.5,0.0196,0.0645,11.603
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Hülkenberg,Nico,Audi,138.5,0.0156,0.0536,12.520
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Lindblad,Arvid,RB F1 Team,132.3,0.0150,0.0511,12.686
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Gasly,Pierre,Alpine F1 Team,95.1,0.0122,0.0410,13.557
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Alonso,Fernando,Aston Martin,78.3,0.0110,0.0367,13.963
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Bortoleto,Gabriel,Audi,56.2,0.0097,0.0340,14.493
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Bearman,Oliver,Haas F1 Team,55.0,0.0096,0.0332,14.544
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Sainz,Carlos,Williams,35.3,0.0086,0.0291,15.011
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Colapinto,Franco,Alpine F1 Team,30.6,0.0084,0.0293,15.015
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Albon,Alexander,Williams,13.5,0.0076,0.0267,15.435
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Stroll,Lance,Aston Martin,-23.6,0.0061,0.0213,16.223
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Camara,Rafael,Haas F1 Team,-31.2,0.0059,0.0210,16.383
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Pérez,Sergio,Cadillac F1 Team,-61.2,0.0049,0.0167,17.033
+elo-k32-lambda1.0,2026,21,Las Vegas Grand Prix,2026-11-22,2026-11-08,1169,f,Bottas,Valtteri,Cadillac F1 Team,-107.6,0.0038,0.0112,17.944

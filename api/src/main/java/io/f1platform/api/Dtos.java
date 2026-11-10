@@ -39,4 +39,24 @@ public final class Dtos {
                                 int inputRaces, boolean gridKnown, int simulations, long randomSeed,
                                 @JsonFormat(shape = JsonFormat.Shape.STRING) Instant createdAt,
                                 JsonNode parameters, List<PredictedDriver> predictions) {}
+
+    // --- Points progression ---
+    public record PointsProgression(String driverCode, String givenName, String familyName,
+                                    String constructor, List<RoundPoints> rounds) {}
+    public record RoundPoints(int round, String raceName, double cumulative) {}
+
+    // --- Driver profile ---
+    public record DriverProfile(long id, String code, String givenName, String familyName, String nationality,
+                                Integer permanentNumber) {}
+    public record DriverResult(int season, int round, String raceName, String circuit, String sessionType,
+                               Integer position, String positionText, String status, Integer grid,
+                               double points, String constructor) {}
+
+    // --- Constructor profile ---
+    public record ConstructorProfile(long id, String name, String nationality) {}
+    public record ConstructorSeason(int season, double points, int wins, int podiums, String bestDriver) {}
+
+    // --- Grid vs finish ---
+    public record GridFinish(String driverCode, String familyName, String constructor,
+                             int grid, int finish, int gained) {}
 }

@@ -5,11 +5,16 @@ import { Status } from "../components/Status";
 import { useAsync } from "../useAsync";
 import { formatDate, formatExpectedPosition, formatPercent } from "../format";
 
-/** The target race for the stored prediction. Austin 2026 is round 18. */
-const TARGET = { year: 2026, round: 18 };
+/** Races that have a stored prediction, newest first. Add an entry when a new race gets a run. */
+const TARGETS = [
+  { year: 2026, round: 21, label: "Las Vegas (R21)" },
+  { year: 2026, round: 19, label: "Mexico City (R19)" },
+  { year: 2026, round: 18, label: "Austin (R18)" },
+];
 
 export function PredictionPage() {
-  const runs = useAsync(() => api.predictions(TARGET.year, TARGET.round), [TARGET.year, TARGET.round]);
+  const [target, setTarget] = useState(TARGETS[0]);
+  const runs = useAsync(() => api.predictions(target.year, target.round), [target.year, target.round]);
   const [chosenId, setChosenId] = useState<number | null>(null);
   const run: PredictionRun | undefined =
     runs.data?.find((r) => r.id === chosenId) ?? runs.data?.[0];
@@ -18,6 +23,15 @@ export function PredictionPage() {
     <section>
       <header className="page-header">
         <h2>Prediction</h2>
+        <label className="field">
+          Race
+          <select
+            value={target.round}
+            onChange={(e) => { setTarget(TARGETS.find((t) => t.round === Number(e.target.value))!); setChosenId(null); }}
+          >
+            {TARGETS.map((t) => <option key={t.round} value={t.round}>{t.label}</option>)}
+          </select>
+        </label>
       </header>
 
       <Status loading={runs.loading} error={runs.error} empty={runs.data?.length === 0} emptyText="No stored prediction for this race yet." />

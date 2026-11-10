@@ -15,16 +15,22 @@ import io.f1platform.persistence.Migrations;
  * and stores it in prediction_run and prediction (V2). Stored runs are never overwritten.
  *
  * Usage: PredictionRunner <jdbc-url> <user> <password> <lambda> [simulations] [dry-run]
+ * Target: -Dtarget.season, -Dtarget.round, -Dtarget.name, -Dtarget.date (defaults: Austin 2026).
  * With dry-run, the model is computed and printed but nothing is stored.
  */
 public final class PredictionRunner {
 
     static final int K = 32;
-    static final int TARGET_SEASON = 2026;
-    static final int TARGET_ROUND = 18;
-    static final String TARGET_NAME = "United States Grand Prix";
-    static final LocalDate TARGET_DATE = LocalDate.of(2026, 10, 25);
     static final long SEED = 2026L;
+
+    /**
+     * The target race. Defaults to Austin 2026; override with -Dtarget.season, -Dtarget.round,
+     * -Dtarget.name and -Dtarget.date (ISO date) to predict another race, for example Mexico City.
+     */
+    static final int TARGET_SEASON = Integer.getInteger("target.season", 2026);
+    static final int TARGET_ROUND = Integer.getInteger("target.round", 18);
+    static final String TARGET_NAME = System.getProperty("target.name", "United States Grand Prix");
+    static final LocalDate TARGET_DATE = LocalDate.parse(System.getProperty("target.date", "2026-10-25"));
 
     private PredictionRunner() {}
 
@@ -41,8 +47,8 @@ public final class PredictionRunner {
         List<RaceRecord> races = RaceRepository.loadRacesBefore(url, user, password, TARGET_DATE);
         RaceRecord last = races.get(races.size() - 1);
         if (last.season() != TARGET_SEASON || last.round() != TARGET_ROUND - 1) {
-            throw new IllegalStateException("expected the last completed race to be 2026 round 17, found "
-                    + last.season() + " round " + last.round());
+            throw new IllegalStateException("expected the last completed race before the target to be round "
+                    + (TARGET_ROUND - 1) + " of " + TARGET_SEASON + ", found " + last.season() + " round " + last.round());
         }
 
         EloRatings ratings = new EloRatings(K);
@@ -122,7 +128,7 @@ public final class PredictionRunner {
                     runId, version, field.size(), last.date());
         }
 
-        System.out.printf("%nAustin %d prediction (pre-qualifying, cutoff %s):%n", TARGET_SEASON, last.date());
+        System.out.printf("%n%s %d prediction (pre-qualifying, data cutoff %s):%n", TARGET_NAME, TARGET_SEASON, last.date());
         System.out.println("driver_id  strength   win(exact)  win(sim)  podium   expected_pos");
         Integer[] order = new Integer[field.size()];
         for (int i = 0; i < order.length; i++) {

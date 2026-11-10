@@ -1,0 +1,178 @@
+races loaded: 1167
+
+Tuning on 2014-2021 (mean Plackett-Luce log likelihood per race, higher is better)
+  model  K   16  lambda 0.00  mean LL -31.2779
+  model  K   16  lambda 0.25  mean LL -30.7266
+  model  K   16  lambda 0.50  mean LL -30.0763
+  model  K   16  lambda 0.75  mean LL -29.2822
+  model  K   16  lambda 1.00  mean LL -28.9329
+  model  K   32  lambda 0.00  mean LL -30.0559
+  model  K   32  lambda 0.25  mean LL -29.4525
+  model  K   32  lambda 0.50  mean LL -28.8202
+  model  K   32  lambda 0.75  mean LL -28.1572
+  model  K   32  lambda 1.00  mean LL -28.1392
+  model  K   48  lambda 0.00  mean LL -29.3078
+  model  K   48  lambda 0.25  mean LL -28.7347
+  model  K   48  lambda 0.50  mean LL -28.1715
+  model  K   48  lambda 0.75  mean LL -27.6361
+  model  K   48  lambda 1.00  mean LL -27.8270
+  model  K   64  lambda 0.00  mean LL -28.8189
+  model  K   64  lambda 0.25  mean LL -28.2892
+  model  K   64  lambda 0.50  mean LL -27.7913
+  model  K   64  lambda 0.75  mean LL -27.3562
+  model  K   64  lambda 1.00  mean LL -27.6788
+  model  K   96  lambda 0.00  mean LL -28.2583
+  model  K   96  lambda 0.25  mean LL -27.8076
+  model  K   96  lambda 0.50  mean LL -27.4115
+  model  K   96  lambda 0.75  mean LL -27.1184
+  model  K   96  lambda 1.00  mean LL -27.5961
+  model  K  128  lambda 0.00  mean LL -27.9944
+  model  K  128  lambda 0.25  mean LL -27.6037
+  model  K  128  lambda 0.50  mean LL -27.2798
+  model  K  128  lambda 0.75  mean LL -27.0818
+  model  K  128  lambda 1.00  mean LL -27.6501
+  model  K  192  lambda 0.00  mean LL -27.8807
+  model  K  192  lambda 0.25  mean LL -27.5697
+  model  K  192  lambda 0.50  mean LL -27.3391
+  model  K  192  lambda 0.75  mean LL -27.2606
+  model  K  192  lambda 1.00  mean LL -27.9334
+  model  K  256  lambda 0.00  mean LL -28.0410
+  model  K  256  lambda 0.25  mean LL -27.7783
+  model  K  256  lambda 0.50  mean LL -27.6050
+  model  K  256  lambda 0.75  mean LL -27.5993
+  model  K  256  lambda 1.00  mean LL -28.3335
+  points beta 0.05  mean LL -33.3502
+  points beta 0.10  mean LL -33.2141
+  points beta 0.20  mean LL -32.9474
+  points beta 0.30  mean LL -32.6884
+  points beta 0.50  mean LL -32.1944
+  points beta 0.75  mean LL -31.6258
+  points beta 1.00  mean LL -31.1158
+  points beta 1.50  mean LL -30.2838
+  points beta 2.00  mean LL -29.7068
+  points beta 3.00  mean LL -29.2445
+  points beta 4.00  mean LL -29.5059
+  points beta 6.00  mean LL -31.3972
+  points beta 8.00  mean LL -34.3435
+  previous-season beta 0.05  mean LL -33.2476
+  previous-season beta 0.10  mean LL -33.0137
+  previous-season beta 0.20  mean LL -32.5668
+  previous-season beta 0.30  mean LL -32.1490
+  previous-season beta 0.50  mean LL -31.4085
+  previous-season beta 0.75  mean LL -30.6781
+  previous-season beta 1.00  mean LL -30.1842
+  previous-season beta 1.50  mean LL -29.9410
+  previous-season beta 2.00  mean LL -30.6345
+  previous-season beta 3.00  mean LL -34.1094
+  previous-season beta 4.00  mean LL -39.2328
+  previous-season beta 6.00  mean LL -51.6683
+  previous-season beta 8.00  mean LL -65.3810
+chosen: model K 128, lambda 0.75; points beta 3.00; previous-season beta 1.50
+
+Test window 2022-2026 (K 128, lambda 0.75, points beta 3.00, previous-season beta 1.50), 110 races
+  mean LL  model -31.2967 | points -32.7685 | previous season -33.6649 | uniform -35.5157
+  model minus points (LL): +1.4718  [95% CI +0.8770, +1.9572]  (5 seasons, 110 races)
+  model minus uniform (LL): +4.2190  [95% CI +4.0020, +4.4276]  (5 seasons, 110 races)
+  model minus previous season (LL): +2.3682  [95% CI +1.3801, +3.3375]  (5 seasons, 110 races)
+  mean Spearman  model 0.7180 | points 0.6825 | previous season 0.5891
+  model minus points (Spearman): +0.0355  [95% CI +0.0233, +0.0459]  (5 seasons, 110 races)
+
+Per season (test window):
+  season races  LL model  LL points  LL uniform  rho model  rho points
+  2022   22     -29.821    -30.240     -33.839      0.731       0.691
+  2023   22     -31.259    -32.648     -35.663      0.728       0.684
+  2024   24     -32.091    -34.386     -36.464      0.737       0.721
+  2025   24     -31.628    -33.030     -35.502      0.665       0.614
+  2026   18     -31.646    -33.500     -36.138      0.735       0.710
+
+Retirements by season (classified and retired cars; league-wide, not used in strengths):
+  season  entries  retired  rate    top reason
+  1950     160      73    45.6%  Cooling, fuel or oil (23)
+  1951     179      85    47.5%  Engine or power unit (41)
+  1952     204      82    40.2%  Engine or power unit (31)
+  1953     246     115    46.7%  Engine or power unit (40)
+  1954     229     107    46.7%  Engine or power unit (36)
+  1955     177      85    48.0%  Gearbox or transmission (23)
+  1956     189      88    46.6%  Engine or power unit (24)
+  1957     166      76    45.8%  Engine or power unit (22)
+  1958     226     110    48.7%  Engine or power unit (34)
+  1959     181      83    45.9%  Gearbox or transmission (27)
+  1960     215      70    32.6%  Gearbox or transmission (21)
+  1961     215      71    33.0%  Engine or power unit (31)
+  1962     205      65    31.7%  Accident or collision (15)
+  1963     242      81    33.5%  Engine or power unit (24)
+  1964     198      72    36.4%  Engine or power unit (30)
+  1965     192      67    34.9%  Engine or power unit (25)
+  1966     164      79    48.2%  Engine or power unit (25)
+  1967     201      98    48.8%  Engine or power unit (47)
+  1968     229     122    53.3%  Engine or power unit (35)
+  1969     177      80    45.2%  Engine or power unit (26)
+  1970     267     117    43.8%  Engine or power unit (57)
+  1971     257     101    39.3%  Engine or power unit (38)
+  1972     305     116    38.0%  Engine or power unit (30)
+  1973     357     142    39.8%  Accident or collision (34)
+  1974     387     163    42.1%  Engine or power unit (39)
+  1975     346     130    37.6%  Accident or collision (43)
+  1976     399     159    39.8%  Accident or collision (48)
+  1977     405     178    44.0%  Accident or collision (66)
+  1978     391     172    44.0%  Accident or collision (57)
+  1979     362     182    50.3%  Engine or power unit (52)
+  1980     336     154    45.8%  Accident or collision (41)
+  1981     361     166    46.0%  Accident or collision (65)
+  1982     401     198    49.4%  Accident or collision (70)
+  1983     385     181    47.0%  Engine or power unit (74)
+  1984     414     218    52.7%  Engine or power unit (84)
+  1985     400     204    51.0%  Engine or power unit (86)
+  1986     407     221    54.3%  Engine or power unit (87)
+  1987     415     208    50.1%  Engine or power unit (87)
+  1988     421     189    44.9%  Engine or power unit (65)
+  1989     418     212    50.7%  Accident or collision (68)
+  1990     419     188    44.9%  Engine or power unit (51)
+  1991     416     191    45.9%  Engine or power unit (66)
+  1992     419     201    48.0%  Accident or collision (68)
+  1993     404     182    45.0%  Accident or collision (78)
+  1994     418     204    48.8%  Accident or collision (86)
+  1995     418     195    46.7%  Accident or collision (73)
+  1996     328     150    45.7%  Accident or collision (64)
+  1997     374     153    40.9%  Accident or collision (63)
+  1998     347     140    40.3%  Accident or collision (52)
+  1999     351     154    43.9%  Accident or collision (51)
+  2000     373     138    37.0%  Accident or collision (51)
+  2001     373     145    38.9%  Accident or collision (45)
+  2002     359     140    39.0%  Engine or power unit (41)
+  2003     320     106    33.1%  Accident or collision (27)
+  2004     360      93    25.8%  Accident or collision (35)
+  2005     376      78    20.7%  Accident or collision (28)
+  2006     396     118    29.8%  Accident or collision (47)
+  2007     374      91    24.3%  Accident or collision (41)
+  2008     368      80    21.7%  Accident or collision (49)
+  2009     340      58    17.1%  Accident or collision (27)
+  2010     456     105    23.0%  Accident or collision (42)
+  2011     454      76    16.7%  Accident or collision (26)
+  2012     478      74    15.5%  Accident or collision (41)
+  2013     418      48    11.5%  Accident or collision (22)
+  2014     407      76    18.7%  Accident or collision (20)
+  2015     378      67    17.7%  Accident or collision (21)
+  2016     462      74    16.0%  Accident or collision (28)
+  2017     400      85    21.3%  Accident or collision (33)
+  2018     420      77    18.3%  Accident or collision (29)
+  2019     420      47    11.2%  Accident or collision (20)
+  2020     340      51    15.0%  Accident or collision (24)
+  2021     440      48    10.9%  Accident or collision (27)
+  2022     440      63    14.3%  Accident or collision (29)
+  2023     440      45    10.2%  No reason given (40)
+  2024     479      43     9.0%  No reason given (43)
+  2025     479      46     9.6%  No reason given (46)
+  2026     396      67    16.9%  No reason given (67)
+
+Retirement reasons, all seasons (9017 retirements):
+  Accident or collision                  2526   28.0%
+  Engine or power unit                   2373   26.3%
+  Gearbox or transmission                1467   16.3%
+  Hydraulics or brakes                    360    4.0%
+  Suspension, steering, wheels or tyres    778    8.6%
+  Electrical or electronics               350    3.9%
+  Cooling, fuel or oil                    747    8.3%
+  Driver health or injury                  14    0.2%
+  No reason given                         372    4.1%
+  Other or unclassified                    30    0.3%

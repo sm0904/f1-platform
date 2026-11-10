@@ -12,3 +12,4 @@ certs/*
 !certs/README.md
 !certs/.gitkeep
 e2e-*.png
+f1platform.dump
