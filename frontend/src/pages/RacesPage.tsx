@@ -5,6 +5,8 @@ import { SeasonPicker } from "../components/SeasonPicker";
 import { Status } from "../components/Status";
 import { useAsync } from "../useAsync";
 import { formatDate, formatPoints, positionLabel, sessionLabel } from "../format";
+import { teamColor } from "../teamColors";
+import { getDriverHeadshot } from "../driverMeta";
 
 interface Props {
   seasons: SeasonSummary[];
@@ -28,10 +30,12 @@ export function RacesPage({ seasons }: Props) {
     [year, activeRound, session],
   );
 
+  const winner = results.data?.[0];
+
   return (
     <section>
       <header className="page-header">
-        <h2>Race results</h2>
+        <h2>Results</h2>
         <SeasonPicker seasons={seasons} value={year} onChange={(y) => { setYear(y); setRound(null); }} />
       </header>
 
@@ -47,16 +51,31 @@ export function RacesPage({ seasons }: Props) {
                 onClick={() => setRound(r.round)}
                 aria-pressed={r.round === activeRound}
               >
-                R{r.round} {r.name.replace(" Grand Prix", " GP")}
+                R{r.round}
               </button>
             ))}
           </div>
 
           {selected && (
-            <p className="note">
-              {selected.name}, {selected.circuit}
-              {selected.locality ? `, ${selected.locality}` : ""} · {formatDate(selected.date)}
-            </p>
+            <div className="card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>{selected.name}</div>
+                <div style={{ color: "var(--fg-secondary)", fontSize: "0.88rem" }}>
+                  {selected.circuit}{selected.locality ? ` · ${selected.locality}` : ""} · {formatDate(selected.date)}
+                </div>
+              </div>
+              {winner && session === "RACE" && (
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  {getDriverHeadshot(winner.driverCode) && (
+                    <img className="driver-avatar" src={getDriverHeadshot(winner.driverCode)!} alt="" loading="lazy" />
+                  )}
+                  <div>
+                    <div style={{ fontSize: "0.78rem", color: "var(--fg-muted)" }}>Winner</div>
+                    <div style={{ fontWeight: 700 }}>{winner.givenName} {winner.familyName}</div>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
 
           <div className="session-picker">
@@ -75,37 +94,58 @@ export function RacesPage({ seasons }: Props) {
 
           <Status loading={results.loading} error={results.error} empty={results.data?.length === 0} emptyText={`No ${sessionLabel(session).toLowerCase()} results for this race.`} />
           {results.data && results.data.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>Pos</th><th>No.</th><th>Driver</th><th>Team</th>
-                  {session !== "QUALIFYING" && <th>Grid</th>}
-                  {session === "QUALIFYING" ? <><th>Q1</th><th>Q2</th><th>Q3</th></> : <><th>Laps</th><th>Time or status</th><th>Points</th></>}
-                </tr>
-              </thead>
-              <tbody>
-                {results.data.map((r) => (
-                  <tr key={`${r.driverCode}-${r.carNumber}-${r.positionText}`}>
-                    <td>{positionLabel(r.position, r.positionText)}</td>
-                    <td>{r.carNumber ?? "-"}</td>
-                    <td>{r.givenName} {r.familyName}</td>
-                    <td>{r.constructor}</td>
-                    {session !== "QUALIFYING" && <td>{r.grid ?? "-"}</td>}
-                    {session === "QUALIFYING" ? (
-                      <>
-                        <td>{r.q1 ?? "-"}</td><td>{r.q2 ?? "-"}</td><td>{r.q3 ?? "-"}</td>
-                      </>
-                    ) : (
-                      <>
-                        <td>{r.laps ?? "-"}</td>
-                        <td>{r.timeText ?? r.statusDetail ?? r.status}</td>
-                        <td>{formatPoints(r.points)}</td>
-                      </>
-                    )}
+            <div className="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th style={{width:48}}>Pos</th><th>Driver</th><th>Team</th>
+                    {session !== "QUALIFYING" && <th>Grid</th>}
+                    {session === "QUALIFYING" ? <><th>Q1</th><th>Q2</th><th>Q3</th></> : <><th>Laps</th><th>Time / Status</th><th>Pts</th></>}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {results.data.map((r) => {
+                    const headshot = getDriverHeadshot(r.driverCode);
+                    return (
+                      <tr key={`${r.driverCode}-${r.carNumber}-${r.positionText}`}>
+                        <td>
+                          <span className={`pos-badge ${r.position !== null && r.position <= 3 ? `p${r.position}` : ""}`}>
+                            {positionLabel(r.position, r.positionText)}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="driver-cell">
+                            {headshot && <img className="driver-avatar" src={headshot} alt="" loading="lazy" />}
+                            <div className="driver-name">
+                              <span className="family">{r.familyName}</span>
+                              <span className="given">{r.givenName}{r.carNumber ? ` #${r.carNumber}` : ""}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="team-badge">
+                            <span className="team-dot" style={{ background: teamColor(r.constructor) }} />
+                            {r.constructor}
+                          </span>
+                        </td>
+                        {session !== "QUALIFYING" && <td>{r.grid ?? "-"}</td>}
+                        {session === "QUALIFYING" ? (
+                          <><td>{r.q1 ?? "-"}</td><td>{r.q2 ?? "-"}</td><td>{r.q3 ?? "-"}</td></>
+                        ) : (
+                          <>
+                            <td>{r.laps ?? "-"}</td>
+                            <td style={{ color: r.status !== "CLASSIFIED" ? "var(--fg-muted)" : undefined }}>
+                              {r.timeText ?? r.statusDetail ?? r.status}
+                            </td>
+                            <td style={{ fontWeight: r.points > 0 ? 700 : 400 }}>{formatPoints(r.points)}</td>
+                          </>
+                        )}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           )}
         </>
       )}

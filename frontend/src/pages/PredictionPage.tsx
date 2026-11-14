@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { api, type PredictionRun } from "../api";
 import { Status } from "../components/Status";
 import { useAsync } from "../useAsync";
 import { formatDate, formatExpectedPosition, formatPercent } from "../format";
+import { teamColor } from "../teamColors";
+import { getDriverHeadshot } from "../driverMeta";
 
-/** Races that have a stored prediction, newest first. Add an entry when a new race gets a run. */
 const TARGETS = [
   { year: 2026, round: 21, label: "Las Vegas (R21)" },
   { year: 2026, round: 19, label: "Mexico City (R19)" },
@@ -19,10 +19,12 @@ export function PredictionPage() {
   const run: PredictionRun | undefined =
     runs.data?.find((r) => r.id === chosenId) ?? runs.data?.[0];
 
+  const maxWin = run ? Math.max(...run.predictions.map((p) => p.winProb)) : 1;
+
   return (
     <section>
       <header className="page-header">
-        <h2>Prediction</h2>
+        <h2>Race prediction</h2>
         <label className="field">
           Race
           <select
@@ -39,7 +41,7 @@ export function PredictionPage() {
       {run && (
         <>
           {runs.data && runs.data.length > 1 && (
-            <label className="field">
+            <label className="field" style={{ marginBottom: "0.75rem" }}>
               Run
               <select value={run.id} onChange={(e) => setChosenId(Number(e.target.value))}>
                 {runs.data.map((r) => (
@@ -51,53 +53,78 @@ export function PredictionPage() {
             </label>
           )}
 
+          <div className="card-grid">
+            <div className="stat-card">
+              <span className="stat-label">Favourite</span>
+              <span className="stat-value" style={{ color: teamColor(run.predictions[0]?.constructor ?? "") }}>
+                {run.predictions[0]?.familyName ?? "-"}
+              </span>
+              <span className="stat-sub">{formatPercent(run.predictions[0]?.winProb ?? 0)} to win</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">Race date</span>
+              <span className="stat-value" style={{ fontSize: "1.2rem" }}>{formatDate(run.targetDate)}</span>
+              <span className="stat-sub">{run.targetName}</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">Data</span>
+              <span className="stat-value" style={{ fontSize: "1.2rem" }}>{run.inputRaces.toLocaleString("en-GB")}</span>
+              <span className="stat-sub">races analysed (cutoff {formatDate(run.dataCutoffDate)})</span>
+            </div>
+          </div>
+
           <div className="callout">
-            <p>
-              <strong>{run.targetName}</strong>, {formatDate(run.targetDate)}.{" "}
-              {run.gridKnown ? "Starting grid known." : "Pre-qualifying: the grid is not known."}
-            </p>
-            <p className="muted">
-              Built from {run.inputRaces.toLocaleString("en-GB")} completed races, with the last race ending on{" "}
-              {formatDate(run.dataCutoffDate)}. Model {run.modelVersion}, {run.simulations.toLocaleString("en-GB")} simulated
-              races, seed {run.randomSeed}. Stored {formatDate(run.createdAt.slice(0, 10))}.
-            </p>
-            <p className="muted">
-              Probabilities assume every car starts the race. Retirements are not modelled, and the model knows nothing
-              about upgrades, weather, or tyre strategy.
+            <p className="muted" style={{ fontSize: "0.82rem" }}>
+              {run.gridKnown ? "Grid known." : "Pre-qualifying: grid not known."}{" "}
+              Model {run.modelVersion}, {run.simulations.toLocaleString("en-GB")} simulations.
+              Assumes every car starts. Does not model retirements, upgrades, weather, or tyre strategy.
             </p>
           </div>
 
-          <div className="chart">
-            <p className="muted">Top ten by expected finish. The full field is in the table below.</p>
-            <ResponsiveContainer width="100%" height={320}>
-              <BarChart data={run.predictions.slice(0, 10).map((p) => ({ name: p.familyName, win: p.winProb * 100, podium: p.podiumProb * 100 }))} margin={{ top: 8, right: 16, bottom: 8, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" interval={0} />
-                <YAxis unit="%" />
-                <Tooltip formatter={(v) => `${Number(v).toFixed(1)}%`} />
-                <Legend />
-                <Bar dataKey="win" name="Win" fill="#e10600" isAnimationActive={false} />
-                <Bar dataKey="podium" name="Podium" fill="#1e41ff" isAnimationActive={false} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <h3 className="section-title">Full field</h3>
 
-          <table>
-            <thead>
-              <tr><th>Expected pos</th><th>Driver</th><th>Team</th><th>Win</th><th>Podium</th></tr>
-            </thead>
-            <tbody>
-              {run.predictions.map((p) => (
-                <tr key={`${p.familyName}-${p.constructor}`}>
-                  <td>{formatExpectedPosition(p.expectedPosition)}</td>
-                  <td>{p.givenName} {p.familyName}</td>
-                  <td>{p.constructor}</td>
-                  <td>{formatPercent(p.winProb)}</td>
-                  <td>{formatPercent(p.podiumProb)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="prediction-grid">
+            {run.predictions.map((p, i) => {
+              const code = p.familyName.slice(0, 3).toUpperCase();
+              const headshot = getDriverHeadshot(code);
+              const color = teamColor(p.constructor);
+              return (
+                <div key={`${p.familyName}-${p.constructor}`} className="prediction-row">
+                  <span className={`rank ${i < 3 ? "top3" : ""}`}>{i + 1}</span>
+                  <div>
+                    {headshot ? (
+                      <img className="driver-avatar" src={headshot} alt="" loading="lazy" style={{ border: `2px solid ${color}` }} />
+                    ) : (
+                      <div className="driver-avatar" style={{ border: `2px solid ${color}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", color: "var(--fg-muted)" }}>
+                        {code}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="driver-cell" style={{ gap: "0.3rem" }}>
+                      <div className="driver-name">
+                        <span className="family">{p.familyName}</span>
+                        <span className="given">{p.givenName} · <span className="team-badge"><span className="team-dot" style={{ background: color }} />{p.constructor}</span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="prob-bar-container">
+                    <div className="prob-label">
+                      <span>Win {formatPercent(p.winProb)}</span>
+                      <span>Podium {formatPercent(p.podiumProb)}</span>
+                    </div>
+                    <div className="prob-bar">
+                      <div className="prob-bar-fill" style={{ width: `${(p.winProb / maxWin) * 100}%`, background: color }} />
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "right", minWidth: 48 }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--fg-muted)" }}>E.Pos</span>
+                    <div style={{ fontWeight: 700, fontSize: "0.95rem" }}>{formatExpectedPosition(p.expectedPosition)}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </>
       )}
     </section>
